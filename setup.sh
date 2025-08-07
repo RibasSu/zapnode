@@ -75,7 +75,7 @@ perguntar() {
 echo -e "\n${YELLOW}🛠️  Configurando o arquivo .env...${NC}"
 
 perguntar PORT           "🔹 Qual porta deseja usar (ex: 3000)"
-perguntar CHATWOOT_URL   "🔹 Qual a URL base do Chatwoot (ex: https://meuchatwoot.com)"
+perguntar CHATWOOT_URL   "🔹 Qual a URL base do Chatwoot (ex: https://app.chatwoot.com)"
 perguntar CHATWOOT_ACCOUNT_ID "🔹 Qual o ID da conta no Chatwoot"
 perguntar CHATWOOT_API_TOKEN  "🔹 Qual o token da API"
 perguntar CHATWOOT_INBOX_ID   "🔹 Qual o ID da inbox"
