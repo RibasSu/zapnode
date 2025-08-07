@@ -57,16 +57,28 @@ fi
 
 cd zapnode || { echo -e "${RED}❌ Erro ao entrar no diretório zapnode.${NC}"; exit 1; }
 
+# Função para perguntar e garantir que o valor não está vazio
+perguntar() {
+    local var_name=$1
+    local prompt=$2
+    local valor=""
+    while [ -z "$valor" ]; do
+        read -p "$prompt: " valor
+        if [ -z "$valor" ]; then
+            echo -e "${RED}⚠ Esse campo é obrigatório.${NC}"
+        fi
+    done
+    eval "$var_name=\"$valor\""
+}
+
 # Criar .env com perguntas
 echo -e "\n${YELLOW}🛠️  Configurando o arquivo .env...${NC}"
 
-read -p "🔹 Qual porta deseja usar? [3000]: " PORT
-PORT=${PORT:-3000}
-
-read -p "🔹 Qual a URL base do Chatwoot (ex: https://meuchatwoot.com)? " CHATWOOT_URL
-read -p "🔹 Qual o ID da conta no Chatwoot? " CHATWOOT_ACCOUNT_ID
-read -p "🔹 Qual o token da API? " CHATWOOT_API_TOKEN
-read -p "🔹 Qual o ID da inbox? " CHATWOOT_INBOX_ID
+perguntar PORT           "🔹 Qual porta deseja usar (ex: 3000)"
+perguntar CHATWOOT_URL   "🔹 Qual a URL base do Chatwoot (ex: https://meuchatwoot.com)"
+perguntar CHATWOOT_ACCOUNT_ID "🔹 Qual o ID da conta no Chatwoot"
+perguntar CHATWOOT_API_TOKEN  "🔹 Qual o token da API"
+perguntar CHATWOOT_INBOX_ID   "🔹 Qual o ID da inbox"
 
 # Criar o .env
 cat <<EOF > .env
