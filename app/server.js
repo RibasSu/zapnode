@@ -7,6 +7,9 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+// Rota para servir arquivos de mídia do WhatsApp
+app.use("/media", whatsapp.mediaMiddleware);
+
 // Start WhatsApp client
 whatsapp.startWhatsApp();
 

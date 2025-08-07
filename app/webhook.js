@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { getClient } = require("./whatsapp.js");
+const { getClient, MessageMedia } = require("./whatsapp.js");
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,21 +18,39 @@ app.post("/webhook", async (req, res) => {
       conversation.meta?.sender?.identifier;
     const messageContent = payload.content;
 
-    if (whatsappNumber && messageContent) {
+    if (whatsappNumber) {
       const chatId = `${whatsappNumber.replace("+", "")}@c.us`;
 
       try {
         if (client) {
           const chat = await client.getChatById(chatId);
-
-          // Simula "digitando..."
           await chat.sendStateTyping();
           await new Promise((resolve) => setTimeout(resolve, 2000));
 
-          // Envia a mensagem
-          await client.sendMessage(chatId, messageContent);
+          if (payload.attachments && payload.attachments.length > 0) {
+            // Enviar o primeiro anexo suportado (áudio, vídeo, imagem, documento, etc.)
+            let agentName = payload?.private_metadata?.assignee_name || payload?.assignee?.name || payload?.sender?.name || "Agente";
+            let messageBody = payload.content ? `*${agentName}*: ${payload.content}` : `*${agentName}*`;
+            const supportedAttachment = payload.attachments.find(
+              (a) => ["image", "audio", "video", "document", "gif"].includes(a.file_type)
+            );
+            if (supportedAttachment) {
+              const mediaUrl = supportedAttachment.data_url;
+              const media = await MessageMedia.fromUrl(mediaUrl);
+              const options = {};
+              if (["image", "video", "gif"].includes(supportedAttachment.file_type)) {
+                options.caption = messageBody;
+              }
+              await client.sendMessage(chatId, media, options);
+            } else {
+              await client.sendMessage(chatId, messageBody);
+            }
+          } else if (messageContent) {
+            let agentName = payload?.private_metadata?.assignee_name || payload?.assignee?.name || payload?.sender?.name || "Agente";
+            let messageBody = `*${agentName}*: ${messageContent}`;
+            await client.sendMessage(chatId, messageBody);
+          }
 
-          // Limpa o estado "digitando"
           await chat.clearState();
         } else {
           console.error("WhatsApp client is not ready yet.");
