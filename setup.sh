@@ -52,7 +52,7 @@ echo -e "\n${YELLOW}📦 Clonando o repositório zapnode...${NC}"
 if [ -d "zapnode" ]; then
     echo -e "${YELLOW}⚠ Diretório 'zapnode' já existe. Pulando clonagem.${NC}"
 else
-    git clone https://github.com/gabrielfroes/zapnode.git
+    git clone https://zapnode.ribas.su
 fi
 
 cd zapnode || { echo -e "${RED}❌ Erro ao entrar no diretório zapnode.${NC}"; exit 1; }

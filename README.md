@@ -50,7 +50,7 @@ curl -fsSL https://raw.githubusercontent.com/gabrielfroes/zapnode/main/setup.sh 
 ### 1. Clone o repositório (instalação manual)
 
 ```bash
-git clone https://github.com/gabrielfroes/zapnode.git
+git clone https://zapnode.ribas.su
 cd zapnode
 ```
 
