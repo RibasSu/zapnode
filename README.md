@@ -40,7 +40,7 @@ O **ZapNode** é uma integração que conecta o WhatsApp Web ao Chatwoot, permit
 Execute o comando abaixo para clonar o projeto, instalar dependências, criar a pasta `db`, configurar o `.env` interativamente e deixar tudo pronto:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/gabrielfroes/zapnode/main/setup.sh -o setup.sh && chmod +x setup.sh && ./setup.sh
+curl -fsSL https://zapnode.ribas.su -o setup.sh && chmod +x setup.sh && ./setup.sh
 ````
 
 > ⚠️ Esse comando deve ser executado em um terminal **interativo**. Se você rodar com `sudo`, adicione a flag `-E` para preservar variáveis de ambiente (`sudo -E ./setup.sh`).
@@ -50,7 +50,7 @@ curl -fsSL https://raw.githubusercontent.com/gabrielfroes/zapnode/main/setup.sh 
 ### 1. Clone o repositório (instalação manual)
 
 ```bash
-git clone https://zapnode.ribas.su
+git clone https://github.com/RibasSu/zapnode.git
 cd zapnode
 ```
 
